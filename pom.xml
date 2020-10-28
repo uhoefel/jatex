@@ -23,7 +23,7 @@
 	<scm>
 		<connection>${uhoefel.git.root}${project.name}.git</connection>
 		<developerConnection>${uhoefel.git.root}${project.name}.git</developerConnection>
-		<url>${uhoefel.git.url}${project.name}/tree/master</url>
+		<url>${uhoefel.git.url}${project.name}/tree/main</url>
 	</scm>
 	<issueManagement>
 		<url>${uhoefel.git.url}${project.name}/issues</url>

@@ -22,7 +22,7 @@ class LatexExecutableCondition implements ExecutionCondition {
 		AnnotatedElement element = context.getElement().orElseThrow(IllegalStateException::new);
 		return findAnnotation(element, EnabledIfLatexExecutable.class)
 				.map(annotation -> disableIfUnreachable(annotation, element))
-				.orElse(ConditionEvaluationResult.enabled("@EnabledIfReachable not used"));
+				.orElse(ConditionEvaluationResult.disabled("@EnabledIfReachable not used"));
 	}
 
 	/**
@@ -36,6 +36,6 @@ class LatexExecutableCondition implements ExecutionCondition {
 		if (Latex.isExecutable(annotation.compiler())) {
 			return ConditionEvaluationResult.enabled("Enabled %s as %s is executable".formatted(element, annotation.compiler()));
 		}
-		return ConditionEvaluationResult.enabled("Disabled %s as %s is not executable".formatted(element, annotation.compiler()));
+		return ConditionEvaluationResult.disabled("Disabled %s as %s is not executable".formatted(element, annotation.compiler()));
 	}
 }

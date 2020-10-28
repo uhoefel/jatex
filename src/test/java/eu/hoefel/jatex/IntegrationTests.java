@@ -327,6 +327,9 @@ class IntegrationTests {
 	@Test
 	@EnabledIfLatexExecutable(compiler = TexCompiler.LUALATEX)
 	void figureExample1(@TempDir Path folder) {
+		
+		System.out.println(Latex.isExecutable(TexCompiler.LUALATEX));
+		
 		Latex tex = Latex.standard();
 		tex.folder(folder + "figureExample1");
 		tex.filename("figureExample1.tex");

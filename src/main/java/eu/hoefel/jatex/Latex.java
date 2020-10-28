@@ -446,7 +446,6 @@ public final class Latex {
 		try {
 			return texpb.start().waitFor() == 0;
 		} catch (IOException ioe) {
-			ioe.printStackTrace();
 			return false;
 		} catch (InterruptedException ie) {
 			Thread.currentThread().interrupt();

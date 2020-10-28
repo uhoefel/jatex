@@ -118,6 +118,7 @@
 				<executions>
 					<execution>
 						<configuration>
+							<additionalOptions>--enable-preview</additionalOptions>
 							<archive>
 								<manifest>
 									<addDefaultImplementationEntries>true</addDefaultImplementationEntries>

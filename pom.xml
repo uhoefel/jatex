@@ -39,14 +39,6 @@
 		</developer>
 	</developers>
 
-	<licenses>
-		<license>
-			<name>The Apache Software License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
@@ -187,8 +179,7 @@
 				<version>3.0.0-M5</version>
 				<configuration>
 					<!-- required due to https://github.com/apache/maven-surefire/pull/263 -->
-					<argLine>--add-exports
-						org.junit.platform.commons/org.junit.platform.commons.util=ALL-UNNAMED</argLine>
+					<argLine>--add-exports org.junit.platform.commons/org.junit.platform.commons.util=ALL-UNNAMED</argLine>
 				</configuration>
 			</plugin>
 

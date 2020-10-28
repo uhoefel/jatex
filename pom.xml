@@ -34,12 +34,19 @@
 
 	<developers>
 		<developer>
-			<email>udo@hoefel.eu</email>
 			<name>Udo Höfel</name>
+			<email>udo@hoefel.eu</email>
 			<url>http://hoefel.eu</url>
 			<id>udoh</id>
 		</developer>
 	</developers>
+
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>http://www.opensource.org/licenses/mit-license.php</url>
+		</license>
+	</licenses>
 
 	<dependencies>
 		<dependency>

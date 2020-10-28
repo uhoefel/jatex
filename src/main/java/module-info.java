@@ -27,6 +27,8 @@ module eu.hoefel.jatex {
 	exports eu.hoefel.jatex.letter;
 	exports eu.hoefel.jatex.junit;
 	
+	opens eu.hoefel.jatex to org.junit.platform.commons;
+	opens eu.hoefel.jatex.letter to org.junit.platform.commons;
 	opens eu.hoefel.jatex.junit to org.junit.platform.commons;
 
 	requires java.logging;

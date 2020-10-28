@@ -17,6 +17,8 @@
 		<uhoefel.git.root>scm:git:ssh://git@github.com/uhoefel/</uhoefel.git.root>
 		<junit.jupiter.version>5.7.0</junit.jupiter.version>
 		<junit.platform.version>1.7.0</junit.platform.version>
+		<jdk.version>15</jdk.version>
+		<jvm.extraArgs>--enable-preview</jvm.extraArgs>
 	</properties>
 
 	<url>${uhoefel.git.url}${project.name}</url>
@@ -80,8 +82,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.1</version>
 				<configuration>
-					<release>15</release>
-					<compilerArgs>--enable-preview</compilerArgs>
+					<release>${jdk.version}</release>
+					<compilerArgs>${jvm.extraArgs}</compilerArgs>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -118,7 +120,8 @@
 				<executions>
 					<execution>
 						<configuration>
-							<additionalOptions>--enable-preview</additionalOptions>
+							<release>${jdk.version}</release>
+							<additionalOptions>${jvm.extraArgs}</additionalOptions>
 							<archive>
 								<manifest>
 									<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
@@ -179,7 +182,7 @@
 				<version>3.0.0-M5</version>
 				<configuration>
 					<!-- required due to https://github.com/apache/maven-surefire/pull/263 -->
-					<argLine>--enable-preview --add-exports org.junit.platform.commons/org.junit.platform.commons.util=ALL-UNNAMED --add-exports org.junit.platform.commons/org.junit.platform.commons.logging=ALL-UNNAMED</argLine>
+					<argLine>${jvm.extraArgs} --add-exports org.junit.platform.commons/org.junit.platform.commons.util=ALL-UNNAMED --add-exports org.junit.platform.commons/org.junit.platform.commons.logging=ALL-UNNAMED</argLine>
 				</configuration>
 			</plugin>
 

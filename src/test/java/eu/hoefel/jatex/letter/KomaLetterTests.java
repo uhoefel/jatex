@@ -1,4 +1,4 @@
-package eu.hoefel.jatex.letters;
+package eu.hoefel.jatex.letter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;

@@ -1,4 +1,4 @@
-package eu.hoefel.jatex.letters;
+package eu.hoefel.jatex.letter;
 
 import java.util.List;
 import java.util.Map;

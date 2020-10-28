@@ -20,6 +20,7 @@ PgfPlots.contourOf(x, y, pdfvalues, Map.of("contour filled", "{number=20}"))
         .exec("yourPathToSaveTo");
 ```
 wherein `x` and `y`are 1D double arrays and `pdfvalues` is a 2D array of size `[x.length][y.length]`. This produces a pdf looking as follows:
+
 ![example pgfplot](img/pgfplots.png)
 
 Furthermore, a convenience class for writing letters (via [scrlttr2](https://www.ctan.org/pkg/scrlttr2)) is provided. Example usage:
@@ -40,6 +41,7 @@ KomaLetter.as("yourPathToSaveTo")
           .exec();
 ```
 producing
+
 ![example KOMA letter](img/letter.png)
 
 Finally, an annotation for [JUnit 5](https://junit.org/junit5/) is provided to execute tests only if the chosen compiler is available and executable:
@@ -64,4 +66,4 @@ The artifact can be found at maven central:
 
 Requirements
 ============
-Jatex is designed to work with Java 15.
+Jatex is designed to work with Java 15+. It needs preview-features enabled. It also needs a LaTeX distribution, like e.g. [MikTeX](https://miktex.org/).

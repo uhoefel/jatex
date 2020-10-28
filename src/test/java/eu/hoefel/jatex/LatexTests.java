@@ -11,6 +11,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+import eu.hoefel.jatex.junit.EnabledIfLatexExecutable;
+
 
 /**
  * Test the main LaTeX class.
@@ -28,6 +30,7 @@ class LatexTests {
 
 	@Test
 	@DisplayName("Testing executability")
+	@EnabledIfLatexExecutable(compiler = TexCompiler.LUALATEX)
 	void executable() {
 		assertTrue(Latex.isExecutable(TexCompiler.LUALATEX));
 	}
@@ -57,7 +60,7 @@ class LatexTests {
 	 * @param folder the temporary folder to save the file to
 	 */
 	@Test
-//	@EnabledIfLatexExecutable(compiler = TexCompiler.LUALATEX)
+	@EnabledIfLatexExecutable(compiler = TexCompiler.LUALATEX)
 	void plotExample1(@TempDir Path folder) {
 		double[][] data1 = new double[][] { linSpace(0, 1, 10), linSpace(-5,  5, 10) };
 		double[][] data2 = new double[][] { linSpace(0, 1, 10), linSpace( 5, -5, 10) };

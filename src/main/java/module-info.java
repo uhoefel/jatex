@@ -17,7 +17,6 @@
  * @author Udo Hoefel
  */
 module eu.hoefel.jatex {
-	exports eu.hoefel.jatex.utility to eu.hoefel.jatex;
 	exports eu.hoefel.jatex;
 	exports eu.hoefel.jatex.letter;
 	exports eu.hoefel.jatex.junit;
@@ -29,4 +28,5 @@ module eu.hoefel.jatex {
 	requires java.logging;
 	requires java.base;
 	requires org.junit.jupiter.api;
+	requires eu.hoefel.utils;
 }

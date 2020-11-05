@@ -24,7 +24,7 @@ import java.util.stream.Stream;
 
 import eu.hoefel.jatex.Equation.EquationEnvironment;
 import eu.hoefel.jatex.Figure.FigureEnvironment;
-import eu.hoefel.jatex.utility.Utils;
+import eu.hoefel.utils.IOs;
 
 /**
  * Class for the construction of
@@ -375,7 +375,7 @@ public final class Latex {
 		build();
 
 		String fileName = null;
-		Utils.mkdir(folder);
+		IOs.mkdir(folder);
 		
 		if (name == null || name.isBlank()) {
 			try {
@@ -393,7 +393,7 @@ public final class Latex {
 					+ "Most likely a temporary file could not be generated.");
 		}
 
-		Utils.textToFile(fileName, str.toString());
+		IOs.writeToFile(new File(fileName), str.toString());
 
 		if (showPath) logger.log(Level.INFO, "File saved to: {0}", fileName);
 		return fileName;
@@ -1502,9 +1502,9 @@ public final class Latex {
 			if (!folder.endsWith("/")) folder = folder + "/";
 
 			if (Paths.get(folder).isAbsolute()) {
-				Utils.mkdir(folder);
+				IOs.mkdir(folder);
 			} else {
-				Utils.mkdir(this.folder + folder);
+				IOs.mkdir(this.folder + folder);
 			}
 		}
 		

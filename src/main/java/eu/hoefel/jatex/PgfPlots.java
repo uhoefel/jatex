@@ -11,7 +11,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import eu.hoefel.jatex.utility.Utils;
+import eu.hoefel.utils.Strings;
+import eu.hoefel.utils.Types;
 
 /**
  * Class for handling (pretty) complex pgfplots. Intended to be used in
@@ -158,13 +159,13 @@ public class PgfPlots implements Texable {
 			String file = new File(s).isFile() ? " file " : " ";
 
 			add("\\addplot " + formattedOptions + file + "{" + input + "};");
-		} else if (input.getClass().isArray() && Utils.getArrayDimension(input.getClass()) == 2 && Array.getLength(input) == 2) {
+		} else if (input.getClass().isArray() && Types.dimension(input.getClass()) == 2 && Array.getLength(input) == 2) {
 			add("\\addplot " + formattedOptions + "coordinates {");
 			for (int i = 0; i < Array.getLength(Array.get(input, 0)); i++) {
 				add(Latex.indent(1) + "(" + Array.get(Array.get(input, 0), i) + "," + Array.get(Array.get(input, 1), i) + ")");
 			}
 			add("};");
-		} else if (input.getClass().isArray() && Utils.getArrayDimension(input.getClass()) == 2 && Array.getLength(input) == 3) {
+		} else if (input.getClass().isArray() && Types.dimension(input.getClass()) == 2 && Array.getLength(input) == 3) {
 			add("\\addplot3 " + formattedOptions + "coordinates {");
 			Set<Object> elems = new HashSet<>();
 			for (int i = 0; i < Array.getLength(Array.get(input, 0)); i++) {
@@ -196,7 +197,7 @@ public class PgfPlots implements Texable {
 		addOptions(Map.of("view", "{0}{90}", "colorbar", ""));
 
 		String[] ssvs = new String[x.length * y.length];
-		double[] zFlat = Utils.flatten(z);
+		double[] zFlat = flatten(z);
 		for (int i = 0; i < x.length; i++) {
 			for (int j = 0; j < y.length; j++) {
 				ssvs[i * y.length + j] = x[i] + " " + y[j] + " " + zFlat[i * y.length + j];
@@ -226,6 +227,26 @@ public class PgfPlots implements Texable {
 		}
 		add("};");
 		return this;
+	}
+
+	/**
+	 * Flattens a 2D double array into 1D. The returned data is stored row by row
+	 * from {@code a}. This method only works for rectangular arrays.
+	 * 
+	 * @param a the 2D array
+	 * @return the flattened array
+	 */
+	private static final double[] flatten(double[][] a) {
+		int size = a.length * a[0].length;
+		double[] flat = new double[size];
+
+		int index = 0;
+		for (int i = 0; i < a.length; i++) {
+			int numNew = a[i].length;
+			System.arraycopy(a[i], 0, flat, index, numNew);
+			index += numNew;
+		}
+		return flat;
 	}
 
 	/**
@@ -327,7 +348,7 @@ public class PgfPlots implements Texable {
 	 * @return the Plot object
 	 */
 	public PgfPlots tikzlibraries(String... libraries) {
-		preambleEntries.add(new LatexPreambleEntry("\\usetikzlibrary", Utils.mapOf(libraries), false));
+		preambleEntries.add(new LatexPreambleEntry("\\usetikzlibrary", Strings.mapOf(libraries), false));
 		return this;
 	}
 
@@ -338,7 +359,7 @@ public class PgfPlots implements Texable {
 	 * @return the Plot object
 	 */
 	public PgfPlots pgflibraries(String... libraries) {
-		preambleEntries.add(new LatexPreambleEntry("\\usepgflibrary", Utils.mapOf(libraries), false));
+		preambleEntries.add(new LatexPreambleEntry("\\usepgflibrary", Strings.mapOf(libraries), false));
 		return this;
 	}
 
@@ -349,7 +370,7 @@ public class PgfPlots implements Texable {
 	 * @return the Plot object
 	 */
 	public PgfPlots pgfplotslibraries(String... libraries) {
-		preambleEntries.add(new LatexPreambleEntry("\\usepgfplotslibrary", Utils.mapOf(libraries), false));
+		preambleEntries.add(new LatexPreambleEntry("\\usepgfplotslibrary", Strings.mapOf(libraries), false));
 		return this;
 	}
 
@@ -360,7 +381,7 @@ public class PgfPlots implements Texable {
 	 * @return the Plot object
 	 */
 	public PgfPlots gdlibraries(String... libraries) {
-		preambleEntries.add(new LatexPreambleEntry("\\usegdlibrary", Utils.mapOf(libraries), false));
+		preambleEntries.add(new LatexPreambleEntry("\\usegdlibrary", Strings.mapOf(libraries), false));
 		return this;
 	}
 

@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import eu.hoefel.jatex.utility.Utils;
+import eu.hoefel.utils.Strings;
 
 /**
  * Class for handling tikzpictures to be included in {@link Latex}
@@ -170,7 +170,7 @@ public final class Tikz implements Texable {
 	 * @return the Tikz object
 	 */
 	public Tikz tikzlibraries(String... libraries) {
-		preambleEntries.add(new LatexPreambleEntry("\\usetikzlibrary", Utils.mapOf(libraries), false));
+		preambleEntries.add(new LatexPreambleEntry("\\usetikzlibrary", Strings.mapOf(libraries), false));
 		return this;
 	}
 
@@ -181,7 +181,7 @@ public final class Tikz implements Texable {
 	 * @return the Tikz object
 	 */
 	public Tikz pgflibraries(String... libraries) {
-		preambleEntries.add(new LatexPreambleEntry("\\usepgflibrary", Utils.mapOf(libraries), false));
+		preambleEntries.add(new LatexPreambleEntry("\\usepgflibrary", Strings.mapOf(libraries), false));
 		return this;
 	}
 
@@ -192,7 +192,7 @@ public final class Tikz implements Texable {
 	 * @return the Tikz object
 	 */
 	public Tikz pgfplotslibraries(String... libraries) {
-		preambleEntries.add(new LatexPreambleEntry("\\usepgfplotslibrary", Utils.mapOf(libraries), false));
+		preambleEntries.add(new LatexPreambleEntry("\\usepgfplotslibrary", Strings.mapOf(libraries), false));
 		return this;
 	}
 
@@ -203,7 +203,7 @@ public final class Tikz implements Texable {
 	 * @return the Tikz object
 	 */
 	public Tikz gdlibraries(String... libraries) {
-		preambleEntries.add(new LatexPreambleEntry("\\usegdlibrary", Utils.mapOf(libraries), false));
+		preambleEntries.add(new LatexPreambleEntry("\\usegdlibrary", Strings.mapOf(libraries), false));
 		return this;
 	}
 

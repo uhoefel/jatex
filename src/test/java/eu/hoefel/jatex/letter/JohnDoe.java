@@ -7,7 +7,6 @@ import eu.hoefel.jatex.Latex;
 import eu.hoefel.jatex.LatexPackage;
 import eu.hoefel.jatex.LatexPreambleEntry;
 import eu.hoefel.jatex.Texable;
-import eu.hoefel.jatex.letter.KomaLetter;
 
 /**
  * Gets the example of user specific settings for a virtual John Doe of the

@@ -14,7 +14,6 @@ import org.junit.jupiter.api.io.TempDir;
 
 import eu.hoefel.jatex.TexCompiler;
 import eu.hoefel.jatex.junit.EnabledIfLatexExecutable;
-import eu.hoefel.jatex.letter.KomaLetter;
 
 /**
  * Basic tests for letters.

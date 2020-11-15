@@ -29,7 +29,7 @@
 	</scm>
 	<issueManagement>
 		<url>${uhoefel.git.url}${project.name}/issues</url>
-		<system>GitLab Issues</system>
+		<system>GitHub Issues</system>
 	</issueManagement>
 
 	<developers>

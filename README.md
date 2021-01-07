@@ -3,6 +3,7 @@
 [![](https://img.shields.io/github/issues/uhoefel/jatex?style=flat-square)](https://github.com/uhoefel/jatex/issues)
 [![](https://img.shields.io/github/stars/uhoefel/jatex?style=flat-square)](https://github.com/uhoefel/jatex/stargazers)
 [![DOI](https://zenodo.org/badge/308012469.svg)](https://zenodo.org/badge/latestdoi/308012469)
+[![Maven Central](https://img.shields.io/maven-central/v/eu.hoefel/jatex.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22eu.hoefel%22%20AND%20a:%22jatex%22)
 [![](https://img.shields.io/github/license/uhoefel/jatex?style=flat-square)](https://choosealicense.com/licenses/mit/)
 
 Jatex is a [Java](https://openjdk.java.net/) library designed to programmatically write [LaTeX](https://www.latex-project.org/) files and run them.

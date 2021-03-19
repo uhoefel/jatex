@@ -19,7 +19,6 @@ import eu.hoefel.jatex.junit.EnabledIfLatexExecutable;
  * 
  * @author Udo Hoefel
  */
-@SuppressWarnings("javadoc")
 class LatexTests {
 
 	@Test

@@ -20,7 +20,6 @@ import eu.hoefel.jatex.Equation.EquationEnvironment;
  * 
  * @author Udo Hoefel
  */
-@SuppressWarnings("javadoc")
 class EquationTests {
 
 	@ParameterizedTest(name = "Testing getter/setter for environments")

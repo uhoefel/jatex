@@ -501,7 +501,7 @@ public class Equation implements Texable {
 		// cannot exist)
 		environment(env, isStarred);
 		if (isStarred) label(null);
-		if ((equationColumns <= 0) && ((env == EquationEnvironment.ALIGNAT) || (env == EquationEnvironment.ALIGNEDAT))) {
+		if (equationColumns <= 0 && (env == EquationEnvironment.ALIGNAT || env == EquationEnvironment.ALIGNEDAT)) {
 			throw new IllegalArgumentException(
 					"You did not specifiy a valid number of columns (specified: " + equationColumns + ") for " + env.toString());
 		}

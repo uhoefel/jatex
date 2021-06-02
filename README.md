@@ -66,10 +66,10 @@ The artifact can be found at maven central:
 <dependency>
     <groupId>eu.hoefel</groupId>
     <artifactId>jatex</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 
 Requirements
 ============
-Jatex is designed to work with Java 15+. It needs preview-features enabled. It also needs a LaTeX distribution, like e.g. [MikTeX](https://miktex.org/).
+Jatex is designed to work with Java 16+. It also needs a LaTeX distribution, like e.g. [MikTeX](https://miktex.org/).

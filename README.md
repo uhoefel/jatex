@@ -72,4 +72,4 @@ The artifact can be found at maven central:
 
 Requirements
 ============
-Jatex is designed to work with Java 16+. It also needs a LaTeX distribution, like e.g. [MikTeX](https://miktex.org/).
+Jatex is designed to work with Java 17+. It also needs a LaTeX distribution, like e.g. [MikTeX](https://miktex.org/).

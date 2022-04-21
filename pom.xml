@@ -26,7 +26,7 @@
         <connection>${uhoefel.git.root}${project.name}.git</connection>
         <developerConnection>${uhoefel.git.root}${project.name}.git</developerConnection>
         <url>${uhoefel.git.url}${project.name}/tree/master</url>
-    </scm>mvn test
+    </scm>
     <issueManagement>
         <url>${uhoefel.git.url}${project.name}/issues</url>
         <system>GitHub Issues</system>

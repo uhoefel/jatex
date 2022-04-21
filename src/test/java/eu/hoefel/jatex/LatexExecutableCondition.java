@@ -1,4 +1,4 @@
-package eu.hoefel.jatex.junit;
+package eu.hoefel.jatex;
 
 import static org.junit.platform.commons.support.AnnotationSupport.findAnnotation;
 
@@ -7,8 +7,6 @@ import java.lang.reflect.AnnotatedElement;
 import org.junit.jupiter.api.extension.ConditionEvaluationResult;
 import org.junit.jupiter.api.extension.ExecutionCondition;
 import org.junit.jupiter.api.extension.ExtensionContext;
-
-import eu.hoefel.jatex.Latex;
 
 /**
  * The condition that tests whether a specified LaTeX compiler can be executed.

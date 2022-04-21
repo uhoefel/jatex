@@ -14,8 +14,6 @@ import org.junit.jupiter.api.io.TempDir;
 import eu.hoefel.jatex.Equation.EquationEnvironment;
 import eu.hoefel.jatex.Figure.FigureEnvironment;
 import eu.hoefel.jatex.Table.TableEnvironment;
-//import eu.hoefel.jatex.junit.EnabledIfLatexExecutable;
-import eu.hoefel.jatex.junit.EnabledIfLatexExecutable;
 
 /**
  * Examples showing some of the usecases of JateX.

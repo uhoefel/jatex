@@ -10,23 +10,14 @@
  * The {@link eu.hoefel.jatex.letter} is the package containing convenience
  * classes for the generation of letters. It depends on the
  * {@link eu.hoefel.jatex} package.
- * <p>
- * The {@link eu.hoefel.jatex.junit} is the package containing classes helping
- * with writing JUnit tests.
  * 
  * @author Udo Hoefel
  */
 module eu.hoefel.jatex {
-	exports eu.hoefel.jatex;
-	exports eu.hoefel.jatex.letter;
-	exports eu.hoefel.jatex.junit;
-	
-	opens eu.hoefel.jatex to org.junit.platform.commons;
-	opens eu.hoefel.jatex.letter to org.junit.platform.commons;
-	opens eu.hoefel.jatex.junit to org.junit.platform.commons;
+    exports eu.hoefel.jatex;
+    exports eu.hoefel.jatex.letter;
 
-	requires java.logging;
-	requires java.base;
-	requires org.junit.jupiter.api;
-	requires eu.hoefel.utils;
+    requires java.logging;
+    requires java.base;
+    requires eu.hoefel.utils;
 }

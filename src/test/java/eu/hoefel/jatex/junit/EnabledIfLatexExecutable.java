@@ -15,10 +15,10 @@ import eu.hoefel.jatex.TexCompiler;
 @ExtendWith(LatexExecutableCondition.class)
 public @interface EnabledIfLatexExecutable {
 
-	/**
-	 * The compiler that is required to be executable.
-	 * 
-	 * @return the LaTeX compiler
-	 */
-	TexCompiler compiler();
+    /**
+     * The compiler that is required to be executable.
+     * 
+     * @return the LaTeX compiler
+     */
+    TexCompiler compiler();
 }

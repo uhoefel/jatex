@@ -50,13 +50,6 @@ producing
 
 ![example KOMA letter](img/letter.png)
 
-Finally, an annotation for [JUnit 5](https://junit.org/junit5/) is provided to execute tests only if the chosen compiler is available and executable:
-```java
-@Test
-@EnabledIfLatexExecutable(compiler = TexCompiler.LUALATEX)
-void testSomething() {
-...
-```
 
 Installation
 ============
@@ -66,7 +59,7 @@ The artifact can be found at maven central:
 <dependency>
     <groupId>eu.hoefel</groupId>
     <artifactId>jatex</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
 </dependency>
 ```
 

@@ -18,6 +18,7 @@
         <junit.jupiter.version>5.8.2</junit.jupiter.version>
         <junit.platform.version>1.8.2</junit.platform.version>
         <jdk.version>17</jdk.version>
+        <jvm.extraArgs></jvm.extraArgs>
     </properties>
 
     <url>${uhoefel.git.url}${project.name}</url>
@@ -180,6 +181,14 @@
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M6</version>
+                <configuration>
+                    <!-- required due to https://github.com/apache/maven-surefire/pull/263 -->
+                    <argLine>
+                       ${jvm.extraArgs}
+                       --add-exports org.junit.platform.commons/org.junit.platform.commons.util=ALL-UNNAMED
+                       --add-exports org.junit.platform.commons/org.junit.platform.commons.logging=ALL-UNNAMED
+                    </argLine>
+                </configuration>
             </plugin>
 
             <plugin>

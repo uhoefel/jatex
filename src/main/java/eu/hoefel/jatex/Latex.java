@@ -409,7 +409,7 @@ public final class Latex {
      * @return the file name to which the LaTeX document got saved
      */
     public String save() {
-        return save(Level.OFF);
+        return save(Level.ALL);
     }
 
     @Override
@@ -480,7 +480,7 @@ public final class Latex {
             }
         }
 
-        String fileName = save(Level.OFF);
+        String fileName = save(Level.ALL);
 
         int errorCode = 0;
         for (int i = 0; i < numRepeat; i++) {

@@ -290,7 +290,7 @@ public final class PgfPlots implements Texable {
         plot.preambleEntries.add(new LatexPreambleEntry("\\pgfplotsset", Map.of("cycle multiindex* list", "{mark list*\\nextlist Dark2-8\\nextlist}",
                                                                         "colormap/viridis", "")));
         tex.add(Tikz.of(plot));
-        tex.save(Level.OFF);
+        tex.save(Level.ALL);
 
         if (tex.isExecutable()) {
             return tex.exec();

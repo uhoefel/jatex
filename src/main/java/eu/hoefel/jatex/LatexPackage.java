@@ -1,5 +1,7 @@
 package eu.hoefel.jatex;
 
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -11,7 +13,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.function.BinaryOperator;
-import java.util.logging.Logger;
 
 /**
  * Record for describing a LaTeX package with the information needed to load it
@@ -31,7 +32,7 @@ import java.util.logging.Logger;
  */
 public record LatexPackage(String name, Map<String, String> options, Map<String, Set<Class<?>>> incompatiblePackages) {
 
-    private static final Logger logger = Logger.getLogger(LatexPackage.class.getName());
+    private static final Logger logger = System.getLogger(LatexPackage.class.getName());
 
     /**
      * Creates the information of a LaTeX package needed to load it appropriately.
@@ -132,7 +133,7 @@ public record LatexPackage(String name, Map<String, String> options, Map<String,
         for (LatexPackage pckg : packages) {
             for (LatexPackage p : packages) {
                 if (pckg.incompatiblePackages().containsKey(p.name())) {
-                    logger.warning(() -> String.format(Locale.ENGLISH,
+                    logger.log(Level.WARNING, () -> String.format(Locale.ENGLISH,
                             "Probably incompatible packages found. "
                                     + "You used these classes: %s, which need the %s package, "
                                     + "which is (probably) incompatible with the %s package "

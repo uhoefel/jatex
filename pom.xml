@@ -5,7 +5,7 @@
 
     <groupId>eu.hoefel</groupId>
     <artifactId>jatex</artifactId>
-    <version>1.2.0</version>
+    <version>1.3.0</version>
     <packaging>jar</packaging>
 
     <name>jatex</name>
@@ -15,8 +15,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <uhoefel.git.url>https://github.com/uhoefel/</uhoefel.git.url>
         <uhoefel.git.root>scm:git:ssh://git@github.com/uhoefel/</uhoefel.git.root>
-        <junit.jupiter.version>5.8.2</junit.jupiter.version>
-        <junit.platform.version>1.8.2</junit.platform.version>
+        <junit.jupiter.version>5.9.2</junit.jupiter.version>
+        <junit.platform.version>1.9.2</junit.platform.version>
         <jdk.version>17</jdk.version>
         <jvm.extraArgs></jvm.extraArgs>
     </properties>

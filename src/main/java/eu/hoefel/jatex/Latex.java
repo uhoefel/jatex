@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -16,9 +18,8 @@ import java.util.NavigableMap;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -54,7 +55,7 @@ public final class Latex {
     public static final LatexPreambleEntry MAJOR_SEPARATOR = new LatexPreambleEntry("% ================", true);
 
     static final Predicate<String> STRING_IS_NOT_BLANK = s -> s != null && !s.isBlank();
-    private static final Logger logger = Logger.getLogger(Latex.class.getName());
+    private static final Logger logger = System.getLogger(Latex.class.getName());
 
     private TexCompiler compiler = TexCompiler.LUALATEX;
 
@@ -382,7 +383,7 @@ public final class Latex {
                 File f = File.createTempFile("tex", ".tex", Paths.get(folder).toFile());
                 fileName = f.getAbsolutePath();
             } catch (IOException e) {
-                logger.log(Level.SEVERE, "Failed to save file", e);
+                logger.log(Level.ERROR, "Failed to save file", e);
             }
         } else {
             fileName = folder + name;
@@ -416,7 +417,7 @@ public final class Latex {
 
     /** Prints the current state of the LaTeX document to the logger. */
     public void show() {
-        logger.severe(this::toString);
+        logger.log(Level.ERROR, this::toString);
     }
 
     /**
@@ -444,7 +445,12 @@ public final class Latex {
     public static boolean isExecutable(TexCompiler compiler) {
         ProcessBuilder texpb = new ProcessBuilder(compiler.executableName(), "--version");
         try {
-            return texpb.start().waitFor() == 0;
+            var process = texpb.start();
+            var timedOut = !process.waitFor(1, TimeUnit.SECONDS);
+            if (!timedOut) {
+                return process.exitValue() == 0;
+            }
+            return false;
         } catch (IOException ioe) {
             return false;
         } catch (InterruptedException ie) {
@@ -462,11 +468,11 @@ public final class Latex {
     public int exec() {
         if (compiler == TexCompiler.LUALATEX) {
             if (!hasPackage("fontspec")) {
-                logger.info("You are using lualatex without the fontspec package. "
+                logger.log(Level.DEBUG, "You are using lualatex without the fontspec package. "
                         + "Proceeding without it.");
             }
             if (!hasPackage("unicode-math")) {
-                logger.info("You are using lualatex without the unicode-math package. "
+                logger.log(Level.DEBUG, "You are using lualatex without the unicode-math package. "
                         + "Proceeding without it.");
             }
         }
@@ -484,17 +490,17 @@ public final class Latex {
                     fileName
                     );
 
-            if (logger.isLoggable(Level.FINE)) texpb.inheritIO();
+            if (logger.isLoggable(Level.TRACE)) texpb.inheritIO();
 
             try {
                 Process texp = texpb.start();
-                if (!logger.isLoggable(Level.FINE)) {
+                if (!logger.isLoggable(Level.TRACE)) {
                     // make sure we don't have a fatal error in the stream and print if there was one
                     try (BufferedReader br = new BufferedReader(new InputStreamReader(texp.getInputStream()))) {
                         List<String> lines = br.lines().collect(Collectors.toList());
                         for (String line : lines) {
                             if (line != null && line.contains("Fatal error occurred")) {
-                                logger.severe(lines.stream().filter(Objects::nonNull).collect(Collectors.joining(System.lineSeparator())));
+                                logger.log(Level.ERROR, lines.stream().filter(Objects::nonNull).collect(Collectors.joining(System.lineSeparator())));
                                 break;
                             }
                         }
@@ -514,11 +520,11 @@ public final class Latex {
 
                 ProcessBuilder bibpb = new ProcessBuilder("biber", "--output-directory=" + folder, file);
 
-                if (logger.isLoggable(Level.FINE)) bibpb.inheritIO();
+                if (logger.isLoggable(Level.TRACE)) bibpb.inheritIO();
 
                 try {
                     Process bibp = bibpb.start();
-                    if (!logger.isLoggable(Level.FINE)) {
+                    if (!logger.isLoggable(Level.TRACE)) {
                         bibp.getInputStream().close();
                         bibp.getErrorStream().close();
                     }
@@ -546,9 +552,9 @@ public final class Latex {
                 if (file.isFile()) {
                     try {
                         Files.delete(file.toPath());
-                        logger.info(() -> "Successfully deleted %s".formatted(file.toPath()));
+                        logger.log(Level.DEBUG, () -> "Successfully deleted %s".formatted(file.toPath()));
                     } catch (IOException e) {
-                        logger.severe(() -> "Unable to delete %s, %s".formatted(file.getAbsolutePath(), e.getMessage()));
+                        logger.log(Level.ERROR, () -> "Unable to delete %s, %s".formatted(file.getAbsolutePath(), e.getMessage()));
                     }
                 }
             }
@@ -596,7 +602,7 @@ public final class Latex {
     /** Does some sanity checks prior to building the tex file. */
     private void sanityChecks() {
         if (!envs.isEmpty()) {
-            logger.log(Level.SEVERE, "Seems like you opened environment(s) that at least were not closed via endEnv(). "
+            logger.log(Level.WARNING, "Seems like you opened environment(s) that at least were not closed via endEnv(). "
                     + "The environment in question is/are {0}."
                     + " I'll try to continue, as you might have closed the environment directly via add().",
                     envs.toString());

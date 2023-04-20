@@ -19,7 +19,7 @@ class LatexPackageTests {
     @DisplayName("Checking package incompatibility warnings")
     @Test
     void testIncompatibility() {
-        assertTrue(LatexPackage.checkForIncompatiblePackages(List.of(new LatexPackage("a", "b", String.class), new LatexPackage("b"))));
-        assertFalse(LatexPackage.checkForIncompatiblePackages(List.of(new LatexPackage("a", "b", String.class), new LatexPackage("c"))));
+        assertTrue(LatexPackage.checkForIncompatiblePackages(List.of(new LatexPackage("a", "b", LatexPackageTests.class), new LatexPackage("b"))));
+        assertFalse(LatexPackage.checkForIncompatiblePackages(List.of(new LatexPackage("a", "b", LatexPackageTests.class), new LatexPackage("c"))));
     }
 }

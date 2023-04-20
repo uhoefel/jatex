@@ -497,7 +497,7 @@ public final class Latex {
                 if (!logger.isLoggable(Level.TRACE)) {
                     // make sure we don't have a fatal error in the stream and print if there was one
                     try (BufferedReader br = new BufferedReader(new InputStreamReader(texp.getInputStream()))) {
-                        List<String> lines = br.lines().collect(Collectors.toList());
+                        List<String> lines = br.lines().toList();
                         for (String line : lines) {
                             if (line != null && line.contains("Fatal error occurred")) {
                                 logger.log(Level.ERROR, lines.stream().filter(Objects::nonNull).collect(Collectors.joining(System.lineSeparator())));

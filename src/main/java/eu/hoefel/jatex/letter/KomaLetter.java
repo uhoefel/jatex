@@ -14,7 +14,7 @@ import eu.hoefel.jatex.Texable;
  * 
  * @author Udo Hoefel
  */
-public class KomaLetter {
+public final class KomaLetter {
     private Texable user;
     private boolean showbank = true;
     private boolean smaller = true;
@@ -41,6 +41,11 @@ public class KomaLetter {
     private String[] body;
 
     private File file;
+
+    /** Hiding any public constructor. */
+    private KomaLetter() {
+        //no-op
+    }
 
     private static Latex setup() {
         return new Latex()

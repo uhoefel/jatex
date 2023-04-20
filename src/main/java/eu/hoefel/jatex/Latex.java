@@ -35,7 +35,7 @@ import eu.hoefel.utils.IOs;
  * @author Udo Hoefel
  */
 public final class Latex {
-    
+
     /** The namespace used for sections/chapters/etc. in labels. */
     public static final String LABEL_NAMESPACE = "sec:";
 

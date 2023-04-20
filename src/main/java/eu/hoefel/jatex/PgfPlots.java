@@ -1,6 +1,7 @@
 package eu.hoefel.jatex;
 
 import java.io.File;
+import java.lang.System.Logger.Level;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -289,7 +290,7 @@ public final class PgfPlots implements Texable {
         plot.preambleEntries.add(new LatexPreambleEntry("\\pgfplotsset", Map.of("cycle multiindex* list", "{mark list*\\nextlist Dark2-8\\nextlist}",
                                                                         "colormap/viridis", "")));
         tex.add(Tikz.of(plot));
-        tex.save(true);
+        tex.save(Level.OFF);
 
         if (tex.isExecutable()) {
             return tex.exec();

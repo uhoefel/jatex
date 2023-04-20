@@ -369,10 +369,13 @@ public final class Latex {
     /**
      * Saves the LaTeX document <em>without executing it</em>.
      * 
-     * @param showPath if true, print the file name to the logger
+     * @param showPathLevel the logger level with which to log the file path, not
+     *                      {@code null}
      * @return the file name to which the LaTeX document got saved
      */
-    public String save(boolean showPath) {
+    public String save(Level showPathLevel) {
+        Objects.requireNonNull(showPathLevel);
+
         build();
 
         String fileName = null;
@@ -396,7 +399,7 @@ public final class Latex {
 
         IOs.writeToFile(new File(fileName), str.toString());
 
-        if (showPath) logger.log(Level.INFO, "File saved to: {0}", fileName);
+        logger.log(showPathLevel, "File saved to: {0}", fileName);
         return fileName;
     }
 
@@ -406,7 +409,7 @@ public final class Latex {
      * @return the file name to which the LaTeX document got saved
      */
     public String save() {
-        return save(false);
+        return save(Level.OFF);
     }
 
     @Override
@@ -477,7 +480,7 @@ public final class Latex {
             }
         }
 
-        String fileName = save(false);
+        String fileName = save(Level.OFF);
 
         int errorCode = 0;
         for (int i = 0; i < numRepeat; i++) {

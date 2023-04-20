@@ -2,6 +2,7 @@ package eu.hoefel.jatex;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.file.Path;
@@ -23,7 +24,8 @@ class LatexTests {
     @Test
     @DisplayName("Testing constructors")
     void constructor() {
-        assertDoesNotThrow(Latex.standard()::show);
+        var source = assertDoesNotThrow(Latex.standard()::toString);
+        assertFalse(source.isBlank());
     }
 
     @Test

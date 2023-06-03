@@ -74,4 +74,10 @@ class LatexTests {
         tex.externalize();
         assertEquals(0, tex.exec());
     }
+
+    @Test
+    @EnabledIfLatexExecutable(compiler = TexCompiler.PDFLATEX)
+    void testMinimal() {
+        Latex.minimal().add("$a=\\alpha_2\\times\\beta$").run("abc.tex");
+    }
 }

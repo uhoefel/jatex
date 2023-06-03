@@ -4,9 +4,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UncheckedIOException;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -314,6 +316,32 @@ public final class Latex {
     }
 
     /**
+     * Creates a minimal latex setup well suited for, e.g, creation of pdfs
+     * containing a single formula.
+     * 
+     * @return a minimalist setup
+     */
+    public static final Latex minimal() {
+        Path folder;
+        try {
+            folder = Files.createTempDirectory("jatex");
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
+
+        Latex latex = new Latex();
+        return latex.compiler(TexCompiler.PDFLATEX)
+                    .documentclass("article")
+                    .usePackages("amsmath", "preview")
+                    .usePackageWithOption("preview", "active")
+                    .usePackageWithOption("preview", "tightpage")
+                    .usePackageWithOption("preview", "pdftex")
+                    .usePackageWithOption("preview", "textmath")
+                    .repeat(1)
+                    .folder(folder.toAbsolutePath().toString());
+    }
+
+    /**
      * Copy the current LaTeX object.
      * 
      * @return the copy
@@ -460,6 +488,27 @@ public final class Latex {
             Thread.currentThread().interrupt();
             throw new IllegalStateException(ie);
         }
+    }
+
+    /**
+     * Convenience method for running latex on the current document.
+     * 
+     * @param filename a valid filename (not a full path!), should end in
+     *                 {@code ".tex"} and should not be {@code null}
+     * @return the path to the generated pdf
+     */
+    public Path run(String filename) {
+        filename(filename);
+        int errorcode = exec();
+        if (errorcode != 0) {
+            throw new IllegalStateException("Latex execution failed with error code "+errorcode);
+        }
+        int dot = name.lastIndexOf('.');
+        var pdf = Paths.get(this.folder, name.substring(0, dot)+".pdf");
+        if (Files.isRegularFile(pdf)) {
+            return pdf;
+        }
+        throw new IllegalStateException("Unable to find pdf @ "+pdf.toAbsolutePath());
     }
 
     /**

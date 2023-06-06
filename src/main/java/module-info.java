@@ -19,6 +19,7 @@ module eu.hoefel.jatex {
     exports eu.hoefel.jatex.junit;
 
     requires eu.hoefel.utils;
-    requires static java.logging;
+    requires static java.logging; // required by junit somehow?
     requires static org.junit.jupiter.api;
+    requires static org.junit.platform.commons;
 }

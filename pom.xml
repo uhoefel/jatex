@@ -68,6 +68,12 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-commons</artifactId>
+            <version>${junit.platform.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>eu.hoefel</groupId>
             <artifactId>utils</artifactId>
             <version>0.3.0</version>

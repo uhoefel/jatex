@@ -20,6 +20,5 @@ module eu.hoefel.jatex {
 
     requires eu.hoefel.utils;
     requires static java.logging;
-    requires static java.base;
     requires static org.junit.jupiter.api;
 }

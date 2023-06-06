@@ -16,8 +16,10 @@
 module eu.hoefel.jatex {
     exports eu.hoefel.jatex;
     exports eu.hoefel.jatex.letter;
+    exports eu.hoefel.jatex.junit;
 
-    requires java.logging;
-    requires java.base;
     requires eu.hoefel.utils;
+    requires static java.logging;
+    requires static java.base;
+    requires static org.junit.jupiter.api;
 }

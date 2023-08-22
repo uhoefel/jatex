@@ -1,6 +1,9 @@
 package eu.hoefel.jatex.letter;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Map;
 
@@ -31,7 +34,7 @@ public final class KomaLetter {
     private String yourMail;
     private String customer;
     private String invoice;
-    private Calendar date;
+    private LocalDate date;
     private String opening;
     private String closing;
     private String ps;
@@ -40,7 +43,7 @@ public final class KomaLetter {
 
     private String[] body;
 
-    private File file;
+    private Path file;
 
     /** Hiding any public constructor. */
     private KomaLetter() {
@@ -133,8 +136,20 @@ public final class KomaLetter {
      * 
      * @param file the file to save to
      * @return the new KomaLetter
+     * @deprecated Use {@link #as(Path)}
      */
+    @Deprecated(forRemoval = true, since = "1.3.2")
     public static KomaLetter as(File file) {
+        return new KomaLetter().file(file);
+    }
+
+    /**
+     * Creates a new KomaLetter bound to file.
+     * 
+     * @param file the file to save to
+     * @return the new KomaLetter
+     */
+    public static KomaLetter as(Path file) {
         return new KomaLetter().file(file);
     }
 
@@ -153,8 +168,21 @@ public final class KomaLetter {
      * 
      * @param file the file to save to
      * @return the new KomaLetter
+     * @deprecated Use {@link #file(Path)}
      */
+    @Deprecated(forRemoval = true, since = "1.3.2")
     public KomaLetter file(File file) {
+        this.file = file == null ? null : file.toPath();
+        return this;
+    }
+
+    /**
+     * Creates a new KomaLetter bound to file.
+     * 
+     * @param file the file to save to
+     * @return the new KomaLetter
+     */
+    public KomaLetter file(Path file) {
         this.file = file;
         return this;
     }
@@ -330,8 +358,21 @@ public final class KomaLetter {
      * 
      * @param date the letter date
      * @return the current KOMA letter instance
+     * @deprecated Use {@link #date(LocalDate)}
      */
+    @Deprecated(forRemoval = true, since = "1.3.2")
     public KomaLetter date(Calendar date) {
+        this.date = date == null ? null : LocalDate.ofInstant(date.toInstant(), ZoneId.systemDefault());
+        return this;
+    }
+
+    /**
+     * Sets the date of the letter. Not necessary if the date of today should be used.
+     * 
+     * @param date the letter date
+     * @return the current KOMA letter instance
+     */
+    public KomaLetter date(LocalDate date) {
         this.date = date;
         return this;
     }
@@ -399,7 +440,7 @@ public final class KomaLetter {
      *         if an error occurred
      */
     public int exec() {
-        if (date == null) date = Calendar.getInstance();
+        if (date == null) date = LocalDate.now();
 
         String address = (toStreet == null ? "" : toStreet + "\\\\")
                 + (toCity == null ? "" : toCity + "\\\\")
@@ -415,8 +456,8 @@ public final class KomaLetter {
             locale = language;
         }
 
-        Latex tex = setup().folder(file.getParent())
-                            .filename(file.getName());
+        Latex tex = setup().folder(file.getParent().toString())
+                           .filename(file.getFileName().toString());
 
         if (user != null) tex.add(user);
 
@@ -437,8 +478,7 @@ public final class KomaLetter {
            .addToPreamble("\\setkomavar{myref}{" + (myRef == null ? "" : myRef) + "}")
            .addToPreamble("\\setkomavar{customer}{" + (customer == null ? "" : customer) + "}")
            .addToPreamble("\\setkomavar{invoice}{" + (invoice == null ? "" : invoice) + "}")
-           .addToPreamble("\\setkomavar{date}{\\DTMdisplaydate{" + date.get(Calendar.YEAR) + "}{"
-                   + (date.get(Calendar.MONTH) + 1) + "}{" + date.get(Calendar.DAY_OF_MONTH) + "}{-1}}")
+           .addToPreamble("\\setkomavar{date}{\\DTMdisplaydate{"+date.getYear()+"}{"+(date.getMonthValue())+"}{"+date.getDayOfMonth()+"}{-1}}")
            .addToPreamble(Latex.MINOR_SEPARATOR)
            .addToPreamble(Latex.EMPTY_LINE)
            .addToPreamble("\\layout")

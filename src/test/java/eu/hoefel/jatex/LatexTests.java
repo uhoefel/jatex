@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.CleanupMode;
 import org.junit.jupiter.api.io.TempDir;
 
 
@@ -43,7 +44,7 @@ class LatexTests {
      * @param n  the number of steps
      * @return n steps from x0 to x1
      */
-    private static final double[] linSpace(double x0, double x1, int n) {
+    private static final double[] linspace(double x0, double x1, int n) {
         if (n == 1) return new double[] { (x0 + x1) / 2 };
 
         double[] f = new double[n];
@@ -61,9 +62,9 @@ class LatexTests {
      */
     @Test
     @EnabledIfLatexExecutable(compiler = TexCompiler.LUALATEX)
-    void plotExample1(@TempDir Path folder) {
-        double[][] data1 = { linSpace(0, 1, 10), linSpace(-5,  5, 10) };
-        double[][] data2 = { linSpace(0, 1, 10), linSpace( 5, -5, 10) };
+    void plotExample1(@TempDir(cleanup = CleanupMode.ON_SUCCESS) Path folder) {
+        double[][] data1 = { linspace(0, 1, 10), linspace(-5,  5, 10) };
+        double[][] data2 = { linspace(0, 1, 10), linspace( 5, -5, 10) };
 
         Latex tex = Latex.standard();
         tex.folder(folder.toString());
@@ -77,7 +78,12 @@ class LatexTests {
 
     @Test
     @EnabledIfLatexExecutable(compiler = TexCompiler.PDFLATEX)
-    void testMinimal() {
-        Latex.minimal().add("$a=\\alpha_2\\times\\beta$").run("abc.tex");
+    void testMinimal(@TempDir(cleanup = CleanupMode.ON_SUCCESS) Path folder) {
+        var file = folder.resolve("abc.tex");
+        assertDoesNotThrow(() -> {
+            Latex.minimal()
+                 .add("$a=\\alpha_2\\times\\beta$")
+                 .run(file.toString());
+        });
     }
 }

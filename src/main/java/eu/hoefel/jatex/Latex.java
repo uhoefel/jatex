@@ -621,7 +621,12 @@ public final class Latex {
      * @return the LaTeX object
      */
     public Latex filename(String name) {
-        this.name = name;
+        var path = Paths.get(name);
+        var folder = path.getParent();
+        if (folder != null) {
+            folder(Paths.get(this.folder).resolve(folder).toString());
+        }
+        this.name = path.getFileName().toString();
         nameSet = true;
         return this;
     }

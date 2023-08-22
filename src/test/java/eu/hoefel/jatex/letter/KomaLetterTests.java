@@ -31,7 +31,7 @@ class KomaLetterTests {
     @EnabledIfLatexExecutable(compiler = TexCompiler.LUALATEX)
     void testLetter(@TempDir Path folder) {
         Path file = Paths.get(folder.toString(), "letter.tex");
-        KomaLetter letter = KomaLetter.as(file.toString())
+        KomaLetter letter = KomaLetter.as(file)
                                 .language("ngerman")
                                 .user(JohnDoe.defaults()) // fill in specifics for yourself
                                 .toName("Mr. Bob Doe")
@@ -48,7 +48,7 @@ class KomaLetterTests {
                                 .subject("subject")
                                 .opening("Dear Testreader,")
                                 .write("This letter is not really a letter. I just test for example if the paragraph building works.",
-                                        "Let's see\\ldots")
+                                       "Let's see\\ldots")
                                 .closing("Mit freundlichen Grüßen,")
                                 .ps("Here some postscriptum text")
                                 .encl("Document1.pdf", "Document2.pdf");

@@ -71,7 +71,7 @@ public final class Latex {
     private boolean clean;
 
     /** known default helper file extensions */
-    private static final Set<String> DEFAULT_EXTS_FOR_CLEANING = Set.of("aux", "bbl", "log");
+    private static final Set<String> DEFAULT_EXTS_FOR_CLEANING = Set.of("aux", "bbl", "log", "out");
 
     /** known helper file extensions, including user set ones. */
     private final Set<String> exts = new HashSet<>();
@@ -632,17 +632,24 @@ public final class Latex {
     }
 
     /**
-     * If true, delete helper files after the execution (including the tex file!).
+     * If {@code true}, delete helper files after the execution.
+     * <p>
+     * By default (i.e., if {@code exts} is empty) {@code .aux}, {@code .bbl},
+     * {@code .log} and {@code .out} files are deleted.
      * 
-     * @param clean true if helper files should be deleted
-     * @param exts  the additional extensions to remove, e.g. "tex" if you want to
-     *              have the tex file removed after generating the pdf as well
+     * @param clean {@code true} if helper files should be deleted
+     * @param exts  the additional extensions to remove, e.g. {@code "tex"} if you
+     *              want to have the tex file removed after generating the pdf
      * @return the LaTeX object
      */
     public Latex clean(boolean clean, String... exts) {
         this.clean = clean;
-        this.exts.retainAll(DEFAULT_EXTS_FOR_CLEANING);
-        Collections.addAll(this.exts, exts);
+        this.exts.clear();
+        if (exts == null || exts.length == 0) {
+            this.exts.addAll(DEFAULT_EXTS_FOR_CLEANING);
+        } else {
+            Collections.addAll(this.exts, exts);
+        }
         cleanSet = true;
         return this;
     }

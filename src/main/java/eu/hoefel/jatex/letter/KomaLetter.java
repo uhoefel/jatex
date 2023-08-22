@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Map;
+import java.util.Objects;
 
 import eu.hoefel.jatex.Latex;
 import eu.hoefel.jatex.LatexPackage;
@@ -21,6 +22,8 @@ public final class KomaLetter {
     private Texable user;
     private boolean showbank = true;
     private boolean smaller = true;
+    private boolean clean = true;
+    private String[] cleanupFileExtensions = new String[0];
     private String toName;
     private String toStreet;
     private String toCity;
@@ -177,13 +180,27 @@ public final class KomaLetter {
     }
 
     /**
-     * Creates a new KomaLetter bound to file.
+     * Sets the file to save to.
      * 
      * @param file the file to save to
-     * @return the new KomaLetter
+     * @return the current KOMA letter instance
      */
     public KomaLetter file(Path file) {
         this.file = file;
+        return this;
+    }
+
+    /**
+     * Whether to clean files with given file extensions. If no file extensions are given, a default set of them will be removed.
+     * 
+     * @param clean {@code true} if helper files should be deleted
+     * @param exts  the additional extensions to remove, e.g. {@code "tex"} if you
+     *              want to have the tex file removed after generating the pdf
+     * @return the new KomaLetter
+     */
+    public KomaLetter clean(boolean clean, String... exts) {
+        this.clean = clean;
+        this.cleanupFileExtensions = Objects.requireNonNullElse(exts, new String[0]);
         return this;
     }
 
@@ -518,6 +535,9 @@ public final class KomaLetter {
 
         tex.add("\\end{letter}");
         tex.add("");
+
+        tex.clean(clean, cleanupFileExtensions);
+
         return tex.exec();
     }
 }

@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.CleanupMode;
 import org.junit.jupiter.api.io.TempDir;
 
 import eu.hoefel.jatex.EnabledIfLatexExecutable;
@@ -29,7 +30,7 @@ class KomaLetterTests {
      */
     @Test
     @EnabledIfLatexExecutable(compiler = TexCompiler.LUALATEX)
-    void testLetter(@TempDir Path folder) {
+    void testLetter(@TempDir(cleanup = CleanupMode.ON_SUCCESS) Path folder) {
         Path file = Paths.get(folder.toString(), "letter.tex");
         KomaLetter letter = KomaLetter.as(file)
                                 .language("ngerman")

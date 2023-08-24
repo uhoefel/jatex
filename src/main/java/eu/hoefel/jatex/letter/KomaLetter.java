@@ -24,6 +24,7 @@ public final class KomaLetter {
     private boolean smaller = true;
     private boolean clean = true;
     private String[] cleanupFileExtensions = new String[0];
+    private String foldmarks = "TBMPL";
     private String toName;
     private String toStreet;
     private String toCity;
@@ -53,24 +54,27 @@ public final class KomaLetter {
         //no-op
     }
 
-    private static Latex setup() {
+    private Latex setup() {
         return new Latex()
             .compiler(TexCompiler.LUALATEX)
             .documentclassWithOptions("scrlttr2", Map.of("version", "last"))
 
             .usePackages("babel")
     
-            .usePackageWithOptions("microtype", Map.of("activate", "{true,nocompatibility}",
-                                                "final", "",
-                                                "tracking", "true"))
+            .usePackageWithOptions("microtype",
+                    Map.of("activate", "{true,nocompatibility}",
+                            "final", "",
+                            "tracking", "true"))
 
-            .usePackageWithOptions("siunitx", Map.of("locale", "DE",
-                                                    "separate-uncertainty", "",
-                                                    "per-mode", "fraction"))
+            .usePackageWithOptions("siunitx",
+                    Map.of("locale", "DE",
+                           "separate-uncertainty", "",
+                           "per-mode", "fraction"))
 
-            .usePackageWithOptions("csquotes", Map.of("strict", "true",
-                                                    "autostyle", "true",
-                                                    "german", "guillemets"))
+            .usePackageWithOptions("csquotes",
+                    Map.of("strict", "true",
+                            "autostyle", "true",
+                            "german", "guillemets"))
 
             .usePackages("xcolor",
                         "datetime2",
@@ -85,7 +89,7 @@ public final class KomaLetter {
             .addToPreamble("% layout definitions")
             .addToPreamble(Latex.MINOR_SEPARATOR)
 
-            .addToPreamble("\\KOMAoptions{fromphone=on,fromrule=aftername,fromemail=on}")
+            .addToPreamble("\\KOMAoptions{fromphone=on,fromrule=aftername,fromemail=on,foldmarks="+(foldmarks != null ? foldmarks : "off")+"}")
             .addToPreamble("\\SetTracking{encoding={*},shape=sc}{40}")
             .addToPreamble(Latex.EMPTY_LINE)
             .addToPreamble("\\newboolean{showbank}")
@@ -242,9 +246,35 @@ public final class KomaLetter {
      * 
      * @param showbank if true, show the bank info
      * @return the current KomaLetter
+     * @deprecated Wrong name, use {@link #showBank(boolean)}
      */
+    @Deprecated(forRemoval = true, since = "1.3.4")
     public KomaLetter showbank(boolean showbank) {
-        this.showbank = showbank;
+        return showBank(showbank);
+    }
+
+    /**
+     *Sets whether to show the bank information.
+     * 
+     * @param showBank if true, show the bank info
+     * @return the current KomaLetter
+     */
+    public KomaLetter showBank(boolean showBank) {
+        this.showbank = showBank;
+        return this;
+    }
+
+    /**
+     *Sets whether to show foldmarks, and which. See the corresponding chapter in the KOMAScript manual.
+     * Default is {@code 'TBMPL'}.
+     * <p>
+     * To deactivate the fold marks use {@code null}.
+     * 
+     * @param foldmarks if true, show foldmarks
+     * @return the current KomaLetter
+     */
+    public KomaLetter foldmarks(String foldmarks) {
+        this.foldmarks = foldmarks;
         return this;
     }
 
@@ -457,18 +487,21 @@ public final class KomaLetter {
      *         if an error occurred
      */
     public int exec() {
-        if (date == null) date = LocalDate.now();
+        if (date == null) {
+            date = LocalDate.now();
+        }
 
         String address = (toStreet == null ? "" : toStreet + "\\\\")
                 + (toCity == null ? "" : toCity + "\\\\")
                 + (toExtra == null ? "" : toExtra);
 
         String locale = user.neededPackages().stream()
-                                            .filter(p -> p.name().equals("babel"))
-                                            .findFirst()
-                                            .orElse(new LatexPackage("babel")) // package without the option we are interested in
-                                            .options()
-                                            .getOrDefault("main", "english");
+                            .filter(p -> p.name().equals("babel"))
+                            .findFirst()
+                            .orElse(new LatexPackage("babel")) // package without the option we are interested in
+                            .options()
+                            .getOrDefault("main", "english");
+
         if (language != null) {
             locale = language;
         }
@@ -476,7 +509,9 @@ public final class KomaLetter {
         Latex tex = setup().folder(file.getParent().toString())
                            .filename(file.getFileName().toString());
 
-        if (user != null) tex.add(user);
+        if (user != null) {
+            tex.add(user);
+        }
 
         tex.usePackageWithOptions("babel", Map.of("main", locale))
            .addToPreamble(Latex.MINOR_SEPARATOR)
@@ -517,7 +552,10 @@ public final class KomaLetter {
             tex.add(Latex.indent(1) + "\\closing{" + closing + "}");
         }
 
-        if (ps != null) tex.add(Latex.indent(1) + "\\ps " + ps);
+        if (ps != null) {
+            tex.add(Latex.indent(1) + "\\ps " + ps);
+        }
+
         if (encl != null) {
             tex.add(Latex.indent(1) + "\\encl{");
             for (String line : encl) {
@@ -525,6 +563,7 @@ public final class KomaLetter {
             }
             tex.add(Latex.indent(1) + "}");
         }
+
         if (cc != null) {
             tex.add(Latex.indent(1) + "\\cc{");
             for (String line : cc) {

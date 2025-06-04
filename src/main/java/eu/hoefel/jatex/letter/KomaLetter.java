@@ -163,11 +163,11 @@ public final class KomaLetter {
     /**
      * Creates a new KomaLetter bound to file.
      * 
-     * @param file the file to save to
+     * @param path the filepath to save to, not {@code null}
      * @return the new KomaLetter
      */
-    public static KomaLetter as(String file) {
-        return KomaLetter.as(new File(file));
+    public static KomaLetter as(String path) {
+        return KomaLetter.as(Path.of(path));
     }
 
     /**

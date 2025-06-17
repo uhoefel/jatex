@@ -4,7 +4,9 @@ import java.io.File;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -45,6 +47,8 @@ public final class KomaLetter {
     private String[] encl;
     private String[] cc;
 
+    private final List<LatexPackage> extraPackages = new ArrayList<>();
+
     private String[] body;
 
     private Path file;
@@ -83,6 +87,7 @@ public final class KomaLetter {
                         "marvosym",
                         "ifthen")
 
+            .usePackageWithOption("eurosym", "right")
             .usePackageWithOption("hyperref", "hidelinks")
 
             .addToPreamble(Latex.MINOR_SEPARATOR)
@@ -481,6 +486,20 @@ public final class KomaLetter {
     }
 
     /**
+     * Adds the specified package.
+     * 
+     * @param pckg the package to use additionally, not {@code null}
+     * @return the current KOMA letter instance
+     * @throws NullPointerException if {@code pckg} is {@code null}
+     */
+    public KomaLetter addPackage(LatexPackage pckg) {
+        Objects.requireNonNull(pckg);
+
+        extraPackages.add(pckg);
+        return this;
+    }
+
+    /**
      * Generates the letter corresponding to the LaTeX content.
      * 
      * @return the error code, i.e. 0 if the execution terminated normally and &gt;1
@@ -507,7 +526,8 @@ public final class KomaLetter {
         }
 
         Latex tex = setup().folder(file.getParent().toString())
-                           .filename(file.getFileName().toString());
+                           .filename(file.getFileName().toString())
+                           .usePackages(extraPackages.toArray(LatexPackage[]::new));
 
         if (user != null) {
             tex.add(user);

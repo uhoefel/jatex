@@ -538,7 +538,7 @@ public final class Equation implements Texable {
             Object obj = input.get(i);
             if (obj instanceof Equation) {
                 spaceCorrection.add("");
-            } else if (obj instanceof String s) {
+            } else if (obj instanceof String) {
                 spaceCorrection.add(" ".repeat(correctLength - spaces.get(i)));
             }
         }
